@@ -1,0 +1,21 @@
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION    1,0,0,0
+PRODUCTVERSION 1,0,0,0
+{
+    BLOCK "StringFileInfo"
+    {
+        BLOCK "040904b0"
+        {
+            VALUE "CompanyName",        "suso.ch\0"
+            VALUE "FileDescription",    "Calculator\0"
+            VALUE "FileVersion",        "1.0.0.0\0"
+            VALUE "LegalCopyright",     "© 2024\0"
+            VALUE "OriginalFilename",   "calculator\0"
+            VALUE "ProductName",        "calc\0"
+            VALUE "ProductVersion",     "1.0.0.0\0"
+        }
+    }
+}
+
+//IDI_MYAPP_ICON          ICON                    "app.ico"
+//IDI_MYAPP_ICON_SMALL    ICON                    "app_s.ico"
