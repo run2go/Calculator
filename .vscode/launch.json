@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(lldb-mac) Launch",
-            "type": "lldb",
+            "name": "(msvc) Launch",
+            "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/subprojects/Build/Calculator/main.app",
+            "program": "${workspaceFolder}\\build\\Debug\\Calculator.exe",
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Build with CMake"
         },
@@ -16,15 +16,15 @@
             "name": "(lldb-linux) Launch",
             "type": "lldb",
             "request": "launch",
-            "program": "${workspaceFolder}/build/subprojects/Build/Calculator/main",
+            "program": "${workspaceFolder}/build/Debug/Calculator",
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Build with CMake"
         },
         {
-            "name": "(msvc) Launch",
-            "type": "cppvsdbg",
+            "name": "(lldb-mac) Launch",
+            "type": "lldb",
             "request": "launch",
-            "program": "${workspaceFolder}\\build\\subprojects\\Build\\Calculator\\Debug\\main.exe",
+            "program": "${workspaceFolder}/build/Debug/Calculator.app",
             "cwd": "${workspaceFolder}",
             "preLaunchTask": "Build with CMake"
         }
