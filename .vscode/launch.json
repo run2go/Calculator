@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(lldb-mac) Launch",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/subprojects/Build/Calculator/main.app",
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Build with CMake"
+        },
+        {
+            "name": "(lldb-linux) Launch",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/subprojects/Build/Calculator/main",
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Build with CMake"
+        },
+        {
+            "name": "(msvc) Launch",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\build\\subprojects\\Build\\Calculator\\Debug\\main.exe",
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Build with CMake"
+        }
+    ]
+}
