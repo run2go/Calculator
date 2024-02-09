@@ -31,7 +31,21 @@ enum ButtonIds
 	OP_MUL,
 	OP_DIV,
 
-	// Extra Buttons
-	BT_EVAL,
-	BT_COMMA
+	// Symbols
+	SYM_COMMA,
+	SYM_PI,
+	SYM_RECIPROCAL,
+	SYM_NEGATE,
+	SYM_FACTORIAL,
+	SYM_SQRT,
+	SYM_POW,
+	SYM_PERCENT,
+	SYM_BRACKET_OPEN,
+	SYM_BRACKET_CLOSE,
+
+	// Buttons
+	BT_DELETE,
+	BT_CLEAR,
+	BT_COPY,
+	BT_EVAL
 };

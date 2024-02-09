@@ -6,6 +6,11 @@
 // #include "httplib.hpp"
 // #include "json.hpp"
 
+#include "math.h"
+/* ~ToDo
+Delete & Clear Buttons spanning
+
+*/
 class WrappedCalculatorFrame : public CalculatorFrame
 {
 public:
@@ -17,138 +22,239 @@ public:
         fontMed.SetPointSize(12);
         fontLarge.SetFaceName("Arial");
         fontLarge.SetPointSize(16);
-        label_output->SetFont(fontLarge);
-        label_output->SetLabelText("<3");
+        label_input->SetFont(fontLarge);
+        label_input->SetLabelText("<3");
     }
 
     ~WrappedCalculatorFrame()
     {
     }
 
-    void AppendString(wxString character)
+    wxString TextGet(wxStaticText *event)
     {
-        auto label_text = label_output->GetLabelText();
-        label_text += character;
-        label_output->SetLabelText(label_text);
+        return event->GetLabelText();
+    }
+    void TextSet(wxStaticText *event, wxString text)
+    {
+        event->SetLabelText(text);
+    }
+    void TextAdd(wxStaticText *event, wxString character)
+    {
+        auto label = TextGet(event);
+        label += character;
+        event->SetLabelText(label);
     }
 
     wxString MathEvaluate(wxString equation)
     {
-        label_output->SetFont(fontLarge);
-        label_output->SetLabelText(equation);
-        return "Yes.";
-    }
+        wxString output;
 
-    void OnButtonPressed(wxCommandEvent &event)
+        output = equation; // Do fancy calculations here
+
+        return output;
+    }
+    void OnViewSelection(wxCommandEvent &event)
     {
-        auto button_id = event.GetId();
-        // wxString button_text = event.GetButt
-        switch (button_id)
+        wxInt16 viewId = event.GetId() - 100;
+        std::string testString = "";
+        switch (viewId)
         {
-        case ButtonIds::BT_EVAL:
-            MathEvaluate(label_output->GetLabelText());
+        case 1:
+            testString = "1";
             break;
-        case ButtonIds::BT_COMMA:
-            AppendString(",");
+        case 2:
+            testString = "2";
             break;
-        case ButtonIds::OP_ADD:
-            AppendString("+");
-            break;
-        case ButtonIds::OP_SUB:
-            AppendString("-");
-            break;
-        case ButtonIds::OP_MUL:
-            AppendString("*");
-            break;
-        case ButtonIds::OP_DIV:
-            AppendString("/");
-            break;
-        case ButtonIds::NUM_0:
-            AppendString("0");
-            break;
-        case ButtonIds::NUM_1:
-            AppendString("1");
-            break;
-        case ButtonIds::NUM_2:
-            AppendString("2");
-            break;
-        case ButtonIds::NUM_3:
-            AppendString("3");
-            break;
-        case ButtonIds::NUM_4:
-            AppendString("4");
-            break;
-        case ButtonIds::NUM_5:
-            AppendString("5");
-            break;
-        case ButtonIds::NUM_6:
-            AppendString("6");
-            break;
-        case ButtonIds::NUM_7:
-            AppendString("7");
-            break;
-        case ButtonIds::NUM_8:
-            AppendString("8");
-            break;
-        case ButtonIds::NUM_9:
-            AppendString("9");
+        case 3:
+            testString = "3";
             break;
         }
+        toConsole(std::to_string(viewId));
 
-        // wchar_t buf[64]{};
-        // swprintf_s(buf, 64, L"ID: %d", button_id);
-        // MessageBox(NULL, buf, L"<3", MB_OK);
+        // LPCWSTR testString = L"";
+        // MessageBox(NULL, testString, L"<3", MB_OK);
 
-        event.WasProcessed(); // Finish processing event
-    }
-    void OnViewSimple(wxCommandEvent &event)
-    {
-        MessageBox(NULL, L"Simple Mode", L"<3", MB_OK);
-    }
-    void OnViewAdvanced(wxCommandEvent &event)
-    {
-        MessageBox(NULL, L"Advanced Mode", L"<3", MB_OK);
-    }
-    void OnViewProgrammer(wxCommandEvent &event)
-    {
-        MessageBox(NULL, L"Programmer Mode", L"<3", MB_OK);
+        wchar_t buffer[64]{};
+        wsprintfW(buffer, L"ID: %d", viewId);
+        // swprintf_s(buffer, 64, L"ID: %d", viewId);
+
+        MessageBox(NULL, buffer, L"<3", MB_OK);
+
+        event.WasProcessed();
     }
     void OnDarkModeChange(wxCommandEvent &event)
     {
-        MessageBox(NULL, L"Dark Mode", L"Pain goes here.", MB_OK);
+        toConsole("Dark Mode");
     }
     void OnVersion(wxCommandEvent &event)
     {
-        MessageBox(NULL, L"Version Stuff!", L"<3", MB_OK);
+        toConsole("Version");
     }
     void OnDebugModeChange(wxCommandEvent &event)
     {
-        bool debug_on = !!event.GetInt();
+        bool debugMode = !!event.GetInt();
 
-        if (debug_on)
+        if (debugMode)
         {
             AllocConsole();                  // allocate/create console
             freopen("CONOUT$", "w", stdout); // redirect print to console
         }
         else
         {
-            // Bug closing console again
+            // Closing console is bugged
             _fcloseall(); // fcloseall() is deprecated, use _fcloseall() instead
-            // bool success = FreeConsole();
-            // printf("%d", success);
+            bool success = FreeConsole();
+            printf("%d", success);
         }
+
+        event.WasProcessed();
+    }
+
+    void OnBaseSelection(wxCommandEvent &event)
+    {
+        int16_t selectedBase = 10;
+        currentBase = 10;
+        toConsole(std::to_string(currentBase));
+
+        event.WasProcessed();
+    }
+    void OnBaseCopy(wxCommandEvent &event)
+    {
+        std::string button_number = event.GetString();
+        toClipboard(button_number);
+        toConsole(button_number);
+
+        event.WasProcessed();
+    }
+    void OnButtonPressed(wxCommandEvent &event)
+    {
+        auto button_id = event.GetId();
+        switch (button_id)
+        {
+        case ButtonIds::BT_EVAL:
+            MathEvaluate(label_input->GetLabelText());
+            break;
+        case ButtonIds::BT_COPY:
+            break;
+        case ButtonIds::BT_DELETE:
+            break;
+        case ButtonIds::BT_CLEAR:
+            break;
+        case ButtonIds::SYM_PI:
+            break;
+        case ButtonIds::SYM_RECIPROCAL:
+            break;
+        case ButtonIds::SYM_NEGATE:
+            break;
+        case ButtonIds::SYM_FACTORIAL:
+            break;
+        case ButtonIds::SYM_SQRT:
+            break;
+        case ButtonIds::SYM_POW:
+            break;
+        case ButtonIds::SYM_PERCENT:
+            break;
+        case ButtonIds::SYM_BRACKET_OPEN:
+            break;
+        case ButtonIds::SYM_BRACKET_CLOSE:
+            break;
+        case ButtonIds::SYM_COMMA:
+            TextAdd(label_eval, ",");
+            break;
+        case ButtonIds::OP_ADD:
+            TextAdd(label_eval, "+");
+            break;
+        case ButtonIds::OP_SUB:
+            TextAdd(label_eval, "-");
+            break;
+        case ButtonIds::OP_MUL:
+            TextAdd(label_eval, "*");
+            break;
+        case ButtonIds::OP_DIV:
+            TextAdd(label_eval, "/");
+            break;
+        case ButtonIds::NUM_0:
+            TextAdd(label_eval, "0");
+            break;
+        case ButtonIds::NUM_1:
+            TextAdd(label_eval, "1");
+            break;
+        case ButtonIds::NUM_2:
+            TextAdd(label_eval, "2");
+            break;
+        case ButtonIds::NUM_3:
+            TextAdd(label_eval, "3");
+            break;
+        case ButtonIds::NUM_4:
+            TextAdd(label_eval, "4");
+            break;
+        case ButtonIds::NUM_5:
+            TextAdd(label_eval, "5");
+            break;
+        case ButtonIds::NUM_6:
+            TextAdd(label_eval, "6");
+            break;
+        case ButtonIds::NUM_7:
+            TextAdd(label_eval, "7");
+            break;
+        case ButtonIds::NUM_8:
+            TextAdd(label_eval, "8");
+            break;
+        case ButtonIds::NUM_9:
+            TextAdd(label_eval, "9");
+            break;
+        case ButtonIds::NUM_A:
+            TextAdd(label_eval, "A");
+            break;
+        case ButtonIds::NUM_B:
+            TextAdd(label_eval, "B");
+            break;
+        case ButtonIds::NUM_C:
+            TextAdd(label_eval, "C");
+            break;
+        case ButtonIds::NUM_D:
+            TextAdd(label_eval, "D");
+            break;
+        case ButtonIds::NUM_E:
+            TextAdd(label_eval, "E");
+            break;
+        case ButtonIds::NUM_F:
+            TextAdd(label_eval, "F");
+            break;
+        }
+
+        event.WasProcessed();
+    }
+    void toConsole(const std::string &s) // Write to console if in debug mode
+    {
+        if (debugMode)
+            std::cout << s << std::endl;
+    }
+
+    void toClipboard(const std::string &s) // Write string to clipboard
+    {
+        OpenClipboard(0);
+        EmptyClipboard();
+        HGLOBAL hg = GlobalAlloc(GMEM_MOVEABLE, s.size());
+        if (!hg)
+        {
+            CloseClipboard();
+            return;
+        }
+        memcpy(GlobalLock(hg), s.c_str(), s.size());
+        GlobalUnlock(hg);
+        SetClipboardData(CF_TEXT, hg);
+        CloseClipboard();
+        GlobalFree(hg);
     }
 
 private:
+    bool debugMode = false;
+    wxInt16 currentBase = 10;
+    wxFloat64 lastResult{};
     wxString outputText{};
-
-public:
     wxFont fontSmall{};
-
-public:
     wxFont fontMed{};
-
-public:
     wxFont fontLarge{};
 };
 
@@ -183,6 +289,7 @@ bool MyApp::OnInit()
     // Create & display frame
     auto frame = new WrappedCalculatorFrame;
     SetTopWindow(frame);
+    frame->SetLabel(wxT("Calculator"));
     frame->Center(); // Center Window
     frame->Show();
     return true;
