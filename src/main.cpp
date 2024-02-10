@@ -6,24 +6,25 @@
 // #include "httplib.hpp"
 // #include "json.hpp"
 
-#include "math.h"
+#include "exprtk/exprtk.hpp"
 /* ~ToDo
 Delete & Clear Buttons spanning
-
+Implement exprtk
 */
 class WrappedCalculatorFrame : public CalculatorFrame
 {
 public:
     WrappedCalculatorFrame() : CalculatorFrame(NULL, wxID_ANY, wxEmptyString)
     {
-        fontSmall.SetFaceName("Arial");
-        fontSmall.SetPointSize(8);
-        fontMed.SetFaceName("Arial");
-        fontMed.SetPointSize(12);
-        fontLarge.SetFaceName("Arial");
-        fontLarge.SetPointSize(16);
-        label_input->SetFont(fontLarge);
-        label_input->SetLabelText("<3");
+        this->SetLabel(wxT("Calculator"));
+        this->Center(); // Center Window
+        // fontSmall.SetFaceName("Arial");
+        // fontSmall.SetPointSize(8);
+        // fontMed.SetFaceName("Arial");
+        // fontMed.SetPointSize(12);
+        // fontLarge.SetFaceName("Arial");
+        // fontLarge.SetPointSize(16);
+        //  label_input->SetFont(fontLarge);
     }
 
     ~WrappedCalculatorFrame()
@@ -45,13 +46,50 @@ public:
         event->SetLabelText(label);
     }
 
+    /*emplate <typename T>
+    void trig_function()
+    {
+        typedef exprtk::symbol_table<T> symbol_table_t;
+        typedef exprtk::expression<T> expression_t;
+        typedef exprtk::parser<T> parser_t;
+
+        const std::string expression_string =
+            "clamp(-1.0,sin(2 * pi * x) + cos(x / 2 * pi),+1.0)";
+
+        T x;
+
+        symbol_table_t symbol_table;
+        symbol_table.add_variable("x", x);
+        symbol_table.add_constants();
+
+        expression_t expression;
+        expression.register_symbol_table(symbol_table);
+
+        parser_t parser;
+        parser.compile(expression_string, expression);
+
+        for (x = T(-5); x <= T(+5); x += T(0.001))
+        {
+            const T y = expression.value();
+            printf("%19.15f\t%19.15f\n", x, y);
+        }
+    }*/
+
+    template <typename T>
     wxString MathEvaluate(wxString equation)
     {
-        wxString output;
-
-        output = equation; // Do fancy calculations here
-
-        return output;
+        // const std::string &temp = std::to_string(equation);
+        // typedef exprtk::expression<T> expression_t;
+        // typedef exprtk::parser<T> parser_t;
+        // T x;
+        //
+        // expression_t expression;
+        // parser_t parser;
+        // parser.compile(temp, expression);
+        //
+        // T result = expression.value();
+        // Convert result to string
+        return "Yes.";
     }
     void OnViewSelection(wxCommandEvent &event)
     {
@@ -132,8 +170,12 @@ public:
         switch (button_id)
         {
         case ButtonIds::BT_EVAL:
-            MathEvaluate(label_input->GetLabelText());
+        {
+            std::string result = MathEvaluate<std::string>(label_input->GetLabelText());
+            TextSet(label_input, result);
+            toConsole(result);
             break;
+        }
         case ButtonIds::BT_COPY:
             break;
         case ButtonIds::BT_DELETE:
@@ -159,67 +201,67 @@ public:
         case ButtonIds::SYM_BRACKET_CLOSE:
             break;
         case ButtonIds::SYM_COMMA:
-            TextAdd(label_eval, ",");
+            TextAdd(label_input, ",");
             break;
         case ButtonIds::OP_ADD:
-            TextAdd(label_eval, "+");
+            TextAdd(label_input, "+");
             break;
         case ButtonIds::OP_SUB:
-            TextAdd(label_eval, "-");
+            TextAdd(label_input, "-");
             break;
         case ButtonIds::OP_MUL:
-            TextAdd(label_eval, "*");
+            TextAdd(label_input, "*");
             break;
         case ButtonIds::OP_DIV:
-            TextAdd(label_eval, "/");
+            TextAdd(label_input, "/");
             break;
         case ButtonIds::NUM_0:
-            TextAdd(label_eval, "0");
+            TextAdd(label_input, "0");
             break;
         case ButtonIds::NUM_1:
-            TextAdd(label_eval, "1");
+            TextAdd(label_input, "1");
             break;
         case ButtonIds::NUM_2:
-            TextAdd(label_eval, "2");
+            TextAdd(label_input, "2");
             break;
         case ButtonIds::NUM_3:
-            TextAdd(label_eval, "3");
+            TextAdd(label_input, "3");
             break;
         case ButtonIds::NUM_4:
-            TextAdd(label_eval, "4");
+            TextAdd(label_input, "4");
             break;
         case ButtonIds::NUM_5:
-            TextAdd(label_eval, "5");
+            TextAdd(label_input, "5");
             break;
         case ButtonIds::NUM_6:
-            TextAdd(label_eval, "6");
+            TextAdd(label_input, "6");
             break;
         case ButtonIds::NUM_7:
-            TextAdd(label_eval, "7");
+            TextAdd(label_input, "7");
             break;
         case ButtonIds::NUM_8:
-            TextAdd(label_eval, "8");
+            TextAdd(label_input, "8");
             break;
         case ButtonIds::NUM_9:
-            TextAdd(label_eval, "9");
+            TextAdd(label_input, "9");
             break;
         case ButtonIds::NUM_A:
-            TextAdd(label_eval, "A");
+            TextAdd(label_input, "A");
             break;
         case ButtonIds::NUM_B:
-            TextAdd(label_eval, "B");
+            TextAdd(label_input, "B");
             break;
         case ButtonIds::NUM_C:
-            TextAdd(label_eval, "C");
+            TextAdd(label_input, "C");
             break;
         case ButtonIds::NUM_D:
-            TextAdd(label_eval, "D");
+            TextAdd(label_input, "D");
             break;
         case ButtonIds::NUM_E:
-            TextAdd(label_eval, "E");
+            TextAdd(label_input, "E");
             break;
         case ButtonIds::NUM_F:
-            TextAdd(label_eval, "F");
+            TextAdd(label_input, "F");
             break;
         }
 
@@ -289,8 +331,6 @@ bool MyApp::OnInit()
     // Create & display frame
     auto frame = new WrappedCalculatorFrame;
     SetTopWindow(frame);
-    frame->SetLabel(wxT("Calculator"));
-    frame->Center(); // Center Window
     frame->Show();
     return true;
 }
