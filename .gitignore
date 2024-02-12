@@ -54,3 +54,6 @@ _deps
 build/*
 
 # End of https://www.toptal.com/developers/gitignore/api/cmake,c++
+
+# wxGlade Autosave Files
+*.wxg#
