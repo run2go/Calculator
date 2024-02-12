@@ -78,39 +78,33 @@ public:
     template <typename T>
     wxString MathEvaluate(wxString equation)
     {
-        // const std::string &temp = std::to_string(equation);
-        // typedef exprtk::expression<T> expression_t;
-        // typedef exprtk::parser<T> parser_t;
-        // T x;
-        //
-        // expression_t expression;
-        // parser_t parser;
-        // parser.compile(temp, expression);
-        //
-        // T result = expression.value();
-        // Convert result to string
-        return "Yes.";
+        const std::string &temp = std::to_string(equation);
+        typedef exprtk::expression<T> expression_t;
+        typedef exprtk::parser<T> parser_t;
+        T x;
+
+        expression_t expression;
+        parser_t parser;
+        parser.compile(temp, expression);
+
+        T result = expression.value();
+
+        return std::to_string(result);
     }
     void OnViewSelection(wxCommandEvent &event)
     {
         wxInt16 viewId = event.GetId() - 100;
-        std::string testString = "";
         switch (viewId)
         {
         case 1:
-            testString = "1";
+
             break;
         case 2:
-            testString = "2";
             break;
         case 3:
-            testString = "3";
             break;
         }
         toConsole(std::to_string(viewId));
-
-        // LPCWSTR testString = L"";
-        // MessageBox(NULL, testString, L"<3", MB_OK);
 
         wchar_t buffer[64]{};
         wsprintfW(buffer, L"ID: %d", viewId);
@@ -150,8 +144,19 @@ public:
 
     void OnBaseSelection(wxCommandEvent &event)
     {
-        int16_t selectedBase = 10;
-        currentBase = 10;
+        int currentBase = event.GetId() - 200;
+        /*switch (currentBase)
+        {
+        case 64:
+
+            break;
+        case 16:
+            break;
+        case 10:
+            break;
+        case 2:
+            break;
+        }*/
         toConsole(std::to_string(currentBase));
 
         event.WasProcessed();
@@ -171,9 +176,9 @@ public:
         {
         case ButtonIds::BT_EVAL:
         {
-            std::string result = MathEvaluate<std::string>(label_input->GetLabelText());
-            TextSet(label_input, result);
-            toConsole(result);
+            // std::string result = MathEvaluate<std::string>(label_input->GetLabelText());
+            // TextSet(label_input, result);
+            // toConsole(result);
             break;
         }
         case ButtonIds::BT_COPY:
