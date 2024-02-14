@@ -1,16 +1,12 @@
 // Calculator Program
 #include <wx/wx.h>
-
-#include "ButtonIds.h"
 #include "gui/CalculatorFrame.h"
+#include "ElementIds.h"
+
 // #include "httplib.hpp"
 // #include "json.hpp"
-
 #include "exprtk/exprtk.hpp"
-/* ~ToDo
-Delete & Clear Buttons spanning
-Implement exprtk
-*/
+#include <sstream>
 class WrappedCalculatorFrame : public CalculatorFrame
 {
 public:
@@ -93,24 +89,60 @@ public:
     }
     void OnViewSelection(wxCommandEvent &event)
     {
-        wxInt16 viewId = event.GetId() - 100;
-        switch (viewId)
-        {
-        case 1:
+        int viewSimple;
+        int viewAdvanced;
+        int viewProgrammer;
+        int colSize[6];
+        int rowSize[6];
 
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        }
-        toConsole(std::to_string(viewId));
+        wxInt16 viewId = event.GetId() - 100;
 
         wchar_t buffer[64]{};
         wsprintfW(buffer, L"ID: %d", viewId);
         // swprintf_s(buffer, 64, L"ID: %d", viewId);
+        toConsole(std::to_string(viewId));
 
         MessageBox(NULL, buffer, L"<3", MB_OK);
+        switch (viewId)
+        {
+        case 1: // Simple View
+        {
+            int colValues[] = {0, 8, 8, 8, 8, 0};
+            int rowValues[] = {10, 0, 10, 10, 10, 10};
+            std::copy(std::begin(colValues), std::end(colValues), colSize);
+            std::copy(std::begin(rowValues), std::end(rowValues), rowSize);
+            break;
+        }
+        case 2: // Advanced View
+        {
+            int colValues[] = {0, 8, 8, 8, 8, 0};
+            int rowValues[] = {10, 0, 10, 10, 10, 10};
+            std::copy(std::begin(colValues), std::end(colValues), colSize);
+            std::copy(std::begin(rowValues), std::end(rowValues), rowSize);
+            break;
+        }
+        case 3: // Programmer View
+        {
+            int colValues[] = {0, 8, 8, 8, 8, 0};
+            int rowValues[] = {10, 0, 10, 10, 10, 10};
+            std::copy(std::begin(colValues), std::end(colValues), colSize);
+            std::copy(std::begin(rowValues), std::end(rowValues), rowSize);
+            break;
+        }
+        }
+
+        // Create a loop to iterate over the UI elements and hide/show depending on colSize & rowSize
+        for (int i = 0; i < 6; ++i)
+        {
+            if (colSize[i] == 0 && rowSize[i] == 0)
+            {
+                // Hide UI Element
+            }
+            else
+            {
+                // Show UI Element
+            }
+        }
 
         event.WasProcessed();
     }
@@ -169,105 +201,223 @@ public:
 
         event.WasProcessed();
     }
-    void OnButtonPressed(wxCommandEvent &event)
+    void OnButtonView1(wxCommandEvent &event)
     {
         auto button_id = event.GetId();
         switch (button_id)
         {
-        case ButtonIds::BT_EVAL:
+        case View1::BT_EVAL:
         {
             // std::string result = MathEvaluate<std::string>(label_input->GetLabelText());
             // TextSet(label_input, result);
             // toConsole(result);
             break;
         }
-        case ButtonIds::BT_COPY:
-            break;
-        case ButtonIds::BT_DELETE:
-            break;
-        case ButtonIds::BT_CLEAR:
-            break;
-        case ButtonIds::SYM_PI:
-            break;
-        case ButtonIds::SYM_RECIPROCAL:
-            break;
-        case ButtonIds::SYM_NEGATE:
-            break;
-        case ButtonIds::SYM_FACTORIAL:
-            break;
-        case ButtonIds::SYM_SQRT:
-            break;
-        case ButtonIds::SYM_POW:
-            break;
-        case ButtonIds::SYM_PERCENT:
-            break;
-        case ButtonIds::SYM_BRACKET_OPEN:
-            break;
-        case ButtonIds::SYM_BRACKET_CLOSE:
-            break;
-        case ButtonIds::SYM_COMMA:
+        case View1::SYM_COMMA:
+        {
             TextAdd(label_input, ",");
             break;
-        case ButtonIds::OP_ADD:
+        }
+        case View1::OP_ADD:
+        {
             TextAdd(label_input, "+");
             break;
-        case ButtonIds::OP_SUB:
+        }
+        case View1::OP_SUB:
+        {
             TextAdd(label_input, "-");
             break;
-        case ButtonIds::OP_MUL:
+        }
+        case View1::OP_MUL:
+        {
             TextAdd(label_input, "*");
             break;
-        case ButtonIds::OP_DIV:
+        }
+        case View1::OP_DIV:
+        {
             TextAdd(label_input, "/");
             break;
-        case ButtonIds::NUM_0:
+        }
+        case View1::NUM_0:
+        {
             TextAdd(label_input, "0");
             break;
-        case ButtonIds::NUM_1:
+        }
+        case View1::NUM_1:
+        {
             TextAdd(label_input, "1");
             break;
-        case ButtonIds::NUM_2:
+        }
+        case View1::NUM_2:
+        {
             TextAdd(label_input, "2");
             break;
-        case ButtonIds::NUM_3:
+        }
+        case View1::NUM_3:
+        {
             TextAdd(label_input, "3");
             break;
-        case ButtonIds::NUM_4:
+        }
+        case View1::NUM_4:
+        {
             TextAdd(label_input, "4");
             break;
-        case ButtonIds::NUM_5:
+        }
+        case View1::NUM_5:
+        {
             TextAdd(label_input, "5");
             break;
-        case ButtonIds::NUM_6:
+        }
+        case View1::NUM_6:
+        {
             TextAdd(label_input, "6");
             break;
-        case ButtonIds::NUM_7:
+        }
+        case View1::NUM_7:
+        {
             TextAdd(label_input, "7");
             break;
-        case ButtonIds::NUM_8:
+        }
+        case View1::NUM_8:
+        {
             TextAdd(label_input, "8");
             break;
-        case ButtonIds::NUM_9:
+        }
+        case View1::NUM_9:
+        {
             TextAdd(label_input, "9");
             break;
-        case ButtonIds::NUM_A:
+        }
+        }
+    }
+    void OnButtonView2(wxCommandEvent &event)
+    {
+        auto button_id = event.GetId();
+        switch (button_id)
+        {
+        case View2::SYM_PI:
+        {
+            break;
+        }
+        case View2::SYM_RECIPROCAL:
+        {
+            break;
+        }
+        case View2::SYM_NEGATE:
+        {
+            break;
+        }
+        case View2::SYM_FACTORIAL:
+        {
+            break;
+        }
+        case View2::SYM_SQRT:
+        {
+            break;
+        }
+        case View2::SYM_POW:
+        {
+            break;
+        }
+        case View2::SYM_PERCENT:
+        {
+            break;
+        }
+        case View2::SYM_BRACKET_OPEN:
+        {
+            break;
+        }
+        case View2::SYM_BRACKET_CLOSE:
+        {
+            break;
+        }
+        }
+    }
+    void OnButtonView3(wxCommandEvent &event)
+    {
+        auto button_id = event.GetId();
+        switch (button_id)
+        {
+        case View3::BT_COPY:
+        {
+            break;
+        }
+        case View3::BT_DELETE:
+        {
+            std::string currentString = TextGet(label_input);
+            int newStringLength = currentString.length() - 1;
+            std::string newString = currentString.substr(newStringLength);
+            TextSet(label_input, newString);
+            break;
+        }
+        case View3::BT_CLEAR:
+        {
+            TextSet(label_eval, "");
+            TextSet(label_input, "");
+            TextSet(label_symbol, "");
+            break;
+        }
+        case View3::NUM_A:
+        {
             TextAdd(label_input, "A");
             break;
-        case ButtonIds::NUM_B:
+        }
+        case View3::NUM_B:
+        {
             TextAdd(label_input, "B");
             break;
-        case ButtonIds::NUM_C:
+        }
+        case View3::NUM_C:
+        {
             TextAdd(label_input, "C");
             break;
-        case ButtonIds::NUM_D:
+        }
+        case View3::NUM_D:
+        {
             TextAdd(label_input, "D");
             break;
-        case ButtonIds::NUM_E:
+        }
+        case View3::NUM_E:
+        {
             TextAdd(label_input, "E");
             break;
-        case ButtonIds::NUM_F:
+        }
+        case View3::NUM_F:
+        {
             TextAdd(label_input, "F");
             break;
+        }
+        }
+    }
+
+    void OnButtonPressed(wxCommandEvent &event)
+    {
+        std::string button_id_str = event.GetString();
+
+        // Extract the namespace from the button ID string
+        std::istringstream iss(button_id_str);
+        std::string namespace_str;
+        std::getline(iss, namespace_str, ':'); // Get everything before the colon
+
+        // Determine the view based on the extracted namespace
+        if (namespace_str == "View1")
+        {
+            // Buttons for View1 (Simple View)
+            OnButtonView1(event);
+        }
+        else if (namespace_str == "View2")
+        {
+            // Buttons for View2 (Advanced View)
+            OnButtonView2(event);
+        }
+        else if (namespace_str == "View3")
+        {
+            // Buttons for View3 (Programmer View)
+            OnButtonView3(event);
+        }
+        else
+        {
+            // Handle any other cases or errors
         }
 
         event.WasProcessed();
