@@ -1,4 +1,20 @@
 // Calculator Program
+
+/* ### TO DO ###
+- define min Windowsize per view
+- "Delete" and "Clear" span across two fields
+- Unicode for Emoji support > Clipboard svg
+- Version/F1 = open repo url
+- F2, F3, F4 = change views
+- F10 = toggle theme
+- F12 = toggle debug
+- debugging console
+- base convertion
+- display/hide elements depending on view
+- define Calculator.ico in Calculator.rc file
+- dynamically scale button & text sizes
+*/
+
 #include <wx/wx.h>
 #include "gui/CalculatorFrame.h"
 #include "ElementIds.h"
