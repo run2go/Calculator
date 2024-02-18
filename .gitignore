@@ -58,3 +58,6 @@ build/*
 # wxGlade caching files
 *.wxg#
 __pycache__/
+
+# Thirdparty files - CMAKE will download them
+thirdparty/*
