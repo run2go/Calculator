@@ -36,4 +36,11 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_list}) # add source
 add_executable(Calculator WIN32 ${source_list} Calculator.rc) # generate binary
 target_include_directories(Calculator PRIVATE ${wxWidgets_SOURCE_DIR}/include) # add wxwidgets include to search path
 target_link_libraries(Calculator PRIVATE wx::base wx::core) # link against wxwidget libaries.
-#set_property(TARGET Calculator PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
+
+# Download and place third-party headers
+file(DOWNLOAD "https://raw.githubusercontent.com/ArashPartow/exprtk/master/exprtk.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/exprtk.hpp")
+file(DOWNLOAD "https://raw.githubusercontent.com/yhirose/cpp-httplib/master/httplib.h" "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/httplib.h")
+file(DOWNLOAD "https://raw.githubusercontent.com/nlohmann/json/develop/include/nlohmann/json.hpp" "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/json.hpp")
+
+# Set property for VS debugger working directory if needed
+# set_property(TARGET Calculator PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
