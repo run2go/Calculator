@@ -19,9 +19,9 @@
 #include "gui/CalculatorFrame.h"
 #include "ElementIds.h"
 
-// #include "httplib.hpp"
+// #include "httplib.h"
 // #include "json.hpp"
-#include "exprtk/exprtk.hpp"
+#include "thirdparty/exprtk.hpp"
 #include <sstream>
 class WrappedCalculatorFrame : public CalculatorFrame
 {
