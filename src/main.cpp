@@ -9,7 +9,7 @@
 - F10 = toggle theme
 - F12 = toggle debug
 - debugging console
-- base convertion
+- base 2, 10, 16, 64 conversion
 - display/hide elements depending on view
 - define Calculator.ico in Calculator.rc file
 - dynamically scale button & text sizes
